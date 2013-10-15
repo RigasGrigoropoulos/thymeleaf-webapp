@@ -1,0 +1,29 @@
+.center {
+	text-align: center !important;
+}
+
+.middle {
+	vertilca-align: middle !important;
+}
+
+.right {
+	text-align: right !important;
+}
+
+.left {
+	text-align: left !important;
+}
+
+#footerText {
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+}
+
+body {
+	padding-top: 5px;
+}
+
+.nav {
+	padding-left: 20px;
+}

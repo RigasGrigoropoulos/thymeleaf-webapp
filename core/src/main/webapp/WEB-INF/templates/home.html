@@ -1,0 +1,14 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="common :: headerFragment">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="../../css/webapp.css" th:href="@{/css/webapp.css}" />
+	</head>	
+	<body>
+		<div th:include="common :: navigation"></div>
+		<div class="container-fluid">
+			<h2>Home</h2>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="common :: headerFragment">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="../../css/webapp.css" th:href="@{/css/webapp.css}" />
+	</head>	
+	<body>
+		<div th:include="common :: navigation"></div>
+		<div class="container-fluid">
+			<div th:unless="${#lists.isEmpty(page.content)}">
+
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th th:text="#{user.username}">Username</th>
+							<th th:text="#{user.name}">First Name</th>
+							<th th:text="#{user.surname}">Surname</th>
+							<th th:text="#{user.enabled}">Enabled</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user : ${page.content}" th:onclick="'showUserModal(\'' + ${user.id} + '\')'">
+							<td th:text="${user.username}">rigasg</td>
+							<td th:text="${user.name}">Rigas</td>
+							<td th:text="${user.surname}">Grigoropoulos</td>
+							<td th:text="${user.enabled}">true</td>
+						</tr>
+					</tbody>
+				</table>
+				<div th:include="common :: paginationbar"></div>	
+				<button class="btn btn-primary" type="button" th:text="#{user.create.title}" onclick="showUserModal('')">Create User</button>
+          	</div>
+          	
+          	<input id="test" type="hidden" name="_method" th:value="${page.totalPages}"/>
+          	<div th:include="common :: userModal"></div>
+			<div th:include="common :: [//footer]"></div>
+		</div>
+	</body>
+</html>

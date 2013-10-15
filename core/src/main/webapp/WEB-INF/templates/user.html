@@ -1,0 +1,64 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="common :: headerFragment">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="../../css/webapp.css" th:href="@{/css/webapp.css}" />
+	</head>	
+	<body>
+		<div class="container-fluid">
+			<div>
+				 <form id="userForm" action="" th:object="${user}" method="post">
+				 	<fieldset>				 		
+				 		<input id="method" type="hidden" name="_method" value=""/> 
+				 		<input id="userId" type="hidden" th:field="*{id}" />				 		
+				 		<div>
+				         	<label th:text="#{user.username}">Username</label>
+				            <input id="username" type="text" th:field="*{username}" required="required"/>
+			         	</div>
+				 		<div>
+				         	<label th:text="#{user.name}">First Name</label>
+				            <input type="text" th:field="*{name}" />
+			         	</div>
+			         	<div>
+				         	<label th:text="#{user.surname}">Surname</label>
+				            <input type="text" th:field="*{surname}" />
+			         	</div>
+			         	<div>
+				         	<label th:text="#{user.enabled}">Enabled</label>
+				            <input type="checkbox" th:field="*{enabled}" />
+			         	</div>
+			         	<br/>			         	
+			         	<div>
+            				<button class="btn btn-primary" type="submit" th:text="#{user.save.title}" >Save User</button>  
+            				<button id="deleteBtn" class="btn btn-danger" type="submit" th:text="#{user.delete.title}" onclick="$('#method').val('DELETE')">Delete User</button>   
+          				</div>
+				 	</fieldset>
+				 </form>	
+			</div>
+			<input id="url" type="hidden" th:value="@{/users/}"/> 
+			<input id="title" type="hidden" th:value="${user.id} ? #{user.edit.title} : #{user.create.title}" />
+			<div th:include="common :: [//footer]"></div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#userModalTitle").text($("#title").val());
+				
+				if ($("#username").val() != "") {
+					$("#username").attr("readonly", "readonly");
+				}
+				var userId = $("#userId").val();
+				var url = $("#url").val();
+				
+				if (userId == "") {
+					$("#deleteBtn").attr("disabled", "disabled");
+					$("#method").val("PUT");
+					$("#userForm").attr("action", url);
+				} else {
+					$("#method").val("POST");					
+					$("#userForm").attr("action", url + userId);
+				}
+			});
+		</script>
+	</body>
+</html>

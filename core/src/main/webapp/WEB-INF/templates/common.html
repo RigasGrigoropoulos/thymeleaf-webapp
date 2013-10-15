@@ -1,0 +1,92 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head th:fragment="headerFragment">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" href="../../css/webapp.css" th:href="@{/css/webapp.css}" />		
+		<script th:src="@{/js/jquery-1.10.2.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div th:fragment="navigation">
+			<ul id="navTabs" class="nav nav-tabs">
+				<li><a th:href="@{/}" th:text="#{page.home}" >Home</a></li>
+			  	<li><a th:href="@{/users}" th:text="#{page.users}" >Users</a></li>
+			  	<li><a href="#" >Link 1</a></li>
+			  	<li><a href="#" >Link 2</a></li>
+			</ul>
+			<script type="text/javascript">
+				var currentUrl = window.location.pathname;
+				$("#navTabs li a").each(function(i, link) {
+					if ($(link).attr("href") === currentUrl) {		
+						$(link).closest('li').attr("class", "active");
+					} else {
+						$(link).closest('li').attr("class", "");
+					}				
+				});			
+			</script>
+		</div>
+		
+		<div th:fragment="userModal">
+			<div id="userModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        	<h4 id="userModalTitle" class="modal-title">Edit User</h4>
+			      	</div>
+	      			<div class="modal-content">       
+	        			<div class="modal-body">          			   
+	        			</div>      
+	      			</div>
+	    		</div>
+	    		<input id="url" type="hidden" th:value="@{/users/}"/> 
+	    		<script type="text/javascript">
+					function showUserModal(userId) {
+						var path = $("#url").val();
+						
+						if (userId == '') {
+							path = path + '?new';
+						} else {
+							path = path + userId;
+						}
+						
+						$("#userModal").modal({
+							remote: path
+						});
+					}
+				</script>
+			</div>
+		</div>
+		
+		<div th:fragment="paginationbar">
+		  <div class="pagination pagination-right">
+		    <ul>
+		      <li th:class="${page.firstPage} ? 'disabled' : ''">
+		        <span th:if="${page.firstPage}">First</span>
+		        <a th:if="${not page.firstPage}" th:href="@{/users(pn=0, ps=${page.size})}">First</a>
+		      </li>
+		      <li th:class="${page.hasPreviousPage()} ? '' : 'disabled'">
+		        <span th:if="${not page.hasPreviousPage()}">Previous</span>
+		        <a th:if="${page.hasPreviousPage()}" th:href="@{/users(pn=${page.number - 1}, ps=${page.size})}">Previous</a>
+		      </li>
+		  	 <li th:each="pageNumber : ${#numbers.sequence(1, __${page.totalPages}__)}" th:class="${pageNumber} eq ${page.number + 1} ? 'active' : ''">
+		        <span th:if="${pageNumber} eq ${page.number + 1}" th:text="${pageNumber}">1</span>
+		        <a th:if="${pageNumber} ne ${page.number + 1}" th:href="@{/users(pn=${pageNumber - 1}, ps=${page.size})}"><span th:text="${pageNumber}">1</span></a>
+		      </li> 
+		      <li th:class="${page.hasNextPage()} ? '' : 'disabled'">
+		        <span th:if="${not page.hasNextPage()}">Next</span>
+		        <a th:if="${page.hasNextPage()}" th:href="@{/users(pn=${page.number + 1}, ps=${page.size})}">Next</a>
+		      </li>
+		      <li th:class="${page.lastPage} ? 'disabled' : ''">
+		        <span th:if="${page.lastPage}">Last</span>
+		        <a th:if="${not page.lastPage}" th:href="@{/users(pn=${page.totalPages - 1}, ps=${page.size})}">Last</a>
+		      </li>
+		    </ul>
+		  </div>
+		</div>
+		
+		<footer id="center" th:fragment="footer">
+			<div id="footerText" class="span12"> Copyright 2013 Rigas Grigoropoulos </div>
+		</footer>
+	</body>
+</html>
