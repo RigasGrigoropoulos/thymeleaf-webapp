@@ -27,33 +27,25 @@
 			</script>
 		</div>
 		
-		<div th:fragment="userModal">
-			<div id="userModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div th:fragment="modal">
+			<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-header">
 			        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			        	<h4 id="userModalTitle" class="modal-title">Edit User</h4>
+			        	<h4 id="modalTitle" class="modal-title">Modal Title</h4>
 			      	</div>
-	      			<div class="modal-content">       
-	        			<div class="modal-body">          			   
+	      			<div class="modal-content" >       
+	        			<div class="modal-body" >          			   
 	        			</div>      
 	      			</div>
 	    		</div>
-	    		<input id="url" type="hidden" th:value="@{/users/}"/> 
-	    		<script type="text/javascript">
-					function showUserModal(userId) {
-						var path = $("#url").val();
-						
-						if (userId == '') {
-							path = path + '?new';
-						} else {
-							path = path + userId;
-						}
-						
-						$("#userModal").modal({
-							remote: path
+	    		<script type="text/javascript">	  
+					function showModal(path) {							
+						$("#modal").modal().find(".modal-body").load(path, function() {
+							$("#title").attr('hidden', 'hidden');
+							$("#modalTitle").text($("#title").text());
 						});
-					}
+					};					
 				</script>
 			</div>
 		</div>

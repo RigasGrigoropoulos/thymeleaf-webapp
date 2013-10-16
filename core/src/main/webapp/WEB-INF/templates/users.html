@@ -9,7 +9,6 @@
 		<div th:include="common :: navigation"></div>
 		<div class="container-fluid">
 			<div th:unless="${#lists.isEmpty(page.content)}">
-
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
@@ -20,7 +19,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="user : ${page.content}" th:onclick="'showUserModal(\'' + ${user.id} + '\')'">
+						<tr th:each="user : ${page.content}" th:onclick="'showModal(\'' + @{/users/} + ${user.id} + '\')'">
 							<td th:text="${user.username}">rigasg</td>
 							<td th:text="${user.name}">Rigas</td>
 							<td th:text="${user.surname}">Grigoropoulos</td>
@@ -28,12 +27,16 @@
 						</tr>
 					</tbody>
 				</table>
-				<div th:include="common :: paginationbar"></div>	
-				<button class="btn btn-primary" type="button" th:text="#{user.create.title}" onclick="showUserModal('')">Create User</button>
+				<div th:include="common :: paginationbar"></div>				
+          	</div>
+          	<div th:if="${#lists.isEmpty(page.content)}">
+          		<h2>No users found</h2>
+          	</div>
+          	<div>
+          		<button class="btn btn-primary" type="button" th:text="#{user.create.title}" th:onclick="'showModal(\'' + @{/users(new)} + '\')'">Create User</button>
           	</div>
           	
-          	<input id="test" type="hidden" name="_method" th:value="${page.totalPages}"/>
-          	<div th:include="common :: userModal"></div>
+          	<div th:include="common :: modal"></div>
 			<div th:include="common :: [//footer]"></div>
 		</div>
 	</body>
